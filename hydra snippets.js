@@ -373,3 +373,126 @@ a.setBins(6)
 
 a.settings[0].cutoff = 2
 a.settings[0].scale = 4
+
+//Martinez??
+
+osc(3, 0.01, 0.4)
+.color(1.2,1.2,1.3)
+.saturate(0.4)
+.modulateRepeat(osc(2),1, 2, 4, 3)
+.modulateKaleid(osc(12,0.05,0),1)
+.luma (0.4)
+.rotate(4, 0.1,0)
+.modulate(o0, () => mouse.y *0.0002 )
+.scale(1).diff(o1)
+.out(o0)
+
+// by Mahalia H-R
+// IG: mm_hr_
+
+shape(()=>Math.sin(time)+1*3, .5,.01)
+.repeat(5,3, ()=>a.fft[0]*2, ()=>a.fft[1]*2)
+.scrollY(.5,0.1)
+.layer(
+  src(o1)
+  .mask(o0)
+  .luma(.01, .1)
+  .invert(.2)
+)
+.modulate(o1,.02)
+.out(o0)
+
+osc(40, 0.09, 0.9)
+.color(.9,0,5)
+.modulate(osc(10).rotate(1, 0.5))
+.rotate(1, 0.2)
+.out(o1)
+
+render(o0)
+
+// ee_2 . MULTIVERSE . time and feedback
+// e_e // @eerie_ear
+pat = ()=>
+solid()
+.layer(solid().diff(
+  osc((time/16) * 1, (time/1000) * 0.2  )
+    .mult(osc((time/8) * 1, (time/1006) * 0.2  ).rotate(1.57))
+    .modulate((shape(106,1,0.05)))
+    .mult(shape(106,1,0.05))
+  ))
+  .modulateScale(osc(2,0.125),0.125)
+//
+solid()
+.layer(solid(1,1,1)
+  .mult(pat()
+  .diff(src(o0).scale(0.2).mult(solid(),[0.7,0.6,0.4,0.6]).kaleid(1.01).saturate(0.3))
+)
+.layer(solid(1,1,1)
+    .mask(
+      noise(2,0.05)
+      .invert().colorama(2).posterize(8,4).luma(0.25).thresh(0.5)
+      .modulateRotate(osc(1,0.5))
+    )
+    .mult(gradient(0.5).kaleid(1).colorama(2).saturate(1.1).contrast(1.6).mult(solid(),0.45))
+  ))
+  .out()
+//
+speed= 0.5
+
+// by Zach Krall
+// http://zachkrall.online/
+
+osc( 215, 0.1, 2 )
+.modulate(
+  osc( 2, -0.3, 100 )
+  .rotate(15)
+)
+.mult(
+  osc( 215, -0.1, 2)
+  .pixelate( 50, 50 )
+)
+.color( 0.9, 0.0, 0.9 )
+.modulate(
+  osc( 6, -0.1 )
+  .rotate( 9 )
+)
+.add(
+  osc( 10, -0.9, 900 )
+  .color(1,0,1)
+)
+.mult(
+  shape(900, 0.2, 1)
+  .luma()
+  .repeatX(2)
+  .repeatY(2)
+  .colorama(10)
+)
+.modulate(
+  osc( 9, -0.3, 900 )
+  .rotate( 6 )
+)
+.add(
+  osc(4, 1, 90)
+  .color(0.2,0,1)
+)
+.out()
+
+// "egg of the phoenix"
+// Alexandre Rangel
+// www.alexandrerangel.art.br/hydra.html
+
+speed=1.2
+shape(99,.15,.5).color(0,1,2)
+
+.diff( shape(240,.5,0).scrollX(.05).rotate( ()=>time/10 ).color(1,0,.75) )
+.diff( shape(99,.4,.002).scrollX(.10).rotate( ()=>time/20 ).color(1,0,.75) )
+.diff( shape(99,.3,.002).scrollX(.15).rotate( ()=>time/30 ).color(1,0,.75) )
+.diff( shape(99,.2,.002).scrollX(.20).rotate( ()=>time/40 ).color(1,0,.75) )
+.diff( shape(99,.1,.002).scrollX(.25).rotate( ()=>time/50 ).color(1,0,.75) )
+
+.modulateScale(
+  shape(240,.5,0).scrollX(.05).rotate( ()=>time/10 )
+  , ()=>(Math.sin(time/3)*.2)+.2 )
+
+.scale(1.6,.6,1)
+.out()
