@@ -374,7 +374,9 @@ a.setBins(6)
 a.settings[0].cutoff = 2
 a.settings[0].scale = 4
 
-//Martinez??
+//CNDSD
+//http://malitzincortes.net/
+// sand spirals
 
 osc(3, 0.01, 0.4)
 .color(1.2,1.2,1.3)
